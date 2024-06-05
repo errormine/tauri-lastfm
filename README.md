@@ -46,4 +46,4 @@ lastFm.artist.getTags({ artist: 'Cher' })
 
 ## Contributing
 
-If you feel that I should change something, submit a PR, or if you have any issues, open an one on [GitHub](https://github.com/errormine/tuari-lastfm).
+If you feel that I should change something, submit a PR, or if you have any issues, open one on [GitHub](https://github.com/errormine/tuari-lastfm).
