@@ -1,6 +1,19 @@
 import { fetch } from "@tauri-apps/plugin-http";
 import { md5 } from "./md5";
 
+function utf8Encode(str) {
+    const encoder = new TextEncoder();
+    const utf8Bytes = encoder.encode(str);
+    let utf8String = '';
+
+    // Convert each byte to its character representation
+    utf8Bytes.forEach(byte => {
+        utf8String += String.fromCharCode(byte);
+    });
+
+    return utf8String;
+}
+
 export default class LastFM {
     /**
      * Represents a LastFM API client.
@@ -37,7 +50,7 @@ export default class LastFM {
                 params[key] = params[key].join(',');
             }
 
-            string += '&' + key + '=' + encodeURIComponent(params[key]);
+            string += '&' + encodeURIComponent(key) + '=' + encodeURIComponent(params[key]);
         });
 
         return string;
@@ -55,6 +68,7 @@ export default class LastFM {
 
             string += key + params[key];
         });
+        console.log(string);
 
         return string;
     }
@@ -119,7 +133,7 @@ export default class LastFM {
             params.sk = sk;
         }
 
-        let paramsString = this.paramsToString(params);
+        let paramsString = utf8Encode(this.paramsToString(params));
         params.api_sig = md5(`${paramsString}${this.apiSecret}`);
         params.format = 'json';
 
